@@ -4,7 +4,7 @@
 
 <p align="center">A fast, Slack-style Mac app for your Microsoft Teams chats.</p>
 
-<p align="center"><a href="https://github.com/dezluan/nodal/releases/latest"><b>Download for macOS</b></a> · <a href="docs/it-setup.md">IT setup</a> · <a href="SECURITY.md">Security</a></p>
+<p align="center"><a href="https://github.com/dezluan/nodal/releases/latest"><b>Download for macOS</b></a> · <a href="docs/it-setup.md">IT setup</a> · <a href="CHANGELOG.md">Release notes</a> · <a href="SECURITY.md">Security</a></p>
 
 ![Nodal showing a group chat](docs/images/chat.png)
 
