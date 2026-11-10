@@ -33,6 +33,11 @@ Nodal is an independent app. It isn't made by or affiliated with Microsoft.
   let other apps place calls.
 - **⌘K** to jump to any chat, person or channel, and **⌘N** for a new message.
 - **Glass or Classic look**, in light and dark, with several colour palettes.
+- **Your company logo** next to the name at the top of the sidebar (Settings → General).
+- **Accessibility** (Settings → Accessibility): text size (⌘+ / ⌘− / ⌘0), reduce motion, reduce
+  transparency, increase contrast, underlined links and bolder keyboard focus. Each follows your
+  Mac's own accessibility settings unless you change it. Buttons, dialogs and the main areas are
+  labelled for VoiceOver.
 
 **Coming soon:** your Outlook calendar, sending files (images already work), and syncing Tasks
 with Microsoft To Do.
@@ -107,10 +112,14 @@ from a message, which keep its text). The
 
 ## Feedback
 
-Found a bug or have an idea? [Open an issue](https://github.com/dezluan/nodal/issues). It
-helps to include your Nodal version and, for problems, the log file. Both are in **Settings →
-Help & feedback** (**Show log file**). The log holds no message text, names or tokens.
-For security issues, see [SECURITY.md](SECURITY.md).
+Found a bug or have an idea? In Nodal, click 💬 next to Settings (or **Settings → Help &
+feedback → Give feedback**). Nodal opens a new issue on this repository in your browser, already
+filled in with your note and your Nodal and macOS versions, and you press **Create** there. You
+need a GitHub account, and issues are public, so leave out anything confidential. You can also
+[open an issue](https://github.com/dezluan/nodal/issues) directly.
+
+For problems, it helps to attach the log file: **Settings → Help & feedback → Show log file**.
+The log holds no message text, names or tokens. For security issues, see [SECURITY.md](SECURITY.md).
 
 ## Licence
 

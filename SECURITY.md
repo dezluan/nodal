@@ -12,7 +12,7 @@ endpoints and has no backend server of its own.
 | Nodal → `graph.microsoft.com/v1.0` | Chats, channels, messages, presence, photos, inline images you send | HTTPS (rustls), bearer token |
 | Nodal → `*.sharepoint.com` | Files you attach, only if file uploads are on | Graph upload-session URL (pre-authorised, no token sent) |
 | Nodal → `media.giphy.com`, `i.giphy.com` | GIFs shown in chats and GIFs you send | HTTPS, no token or cookies; redirects only to Giphy |
-| Nodal → your email app | Feedback you choose to send | A `mailto:` link; you press Send yourself |
+| Nodal → your browser → `github.com` | Feedback you choose to send | A pre-filled public issue page; you press Create yourself |
 | Nodal → system browser | Sign-in page; links you click | macOS `open` |
 | Nodal → macOS Notification Center | New-message banners (sender, chat name, short preview) | UserNotifications framework, with user permission |
 | Microsoft → Nodal (localhost) | OAuth redirect | One-shot listener on `127.0.0.1`/`::1`, random port |
@@ -60,8 +60,9 @@ nothing is sent anywhere else.
   macOS's own WebKit may still keep transient data, such as rendered pages, the way any
   browser does.
 - The UI's local storage holds:
-  - preferences (theme, starred and collapsed sections, your own sidebar sections as names plus
-    conversation ids, last open conversation)
+  - preferences (theme, accessibility options, starred and collapsed sections, your own sidebar
+    sections as names plus conversation ids, last open conversation)
+  - the company logo you picked, as a 96 px PNG
   - recent and favourite GIFs, as Giphy ids
   - names of people seen in each channel, for @mention suggestions
   - the notification bell's list: who, where and when, but **not** the message preview, which

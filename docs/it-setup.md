@@ -96,6 +96,9 @@ Nodal makes outgoing HTTPS connections only, to:
 | `graph.microsoft.com` | Chats, channels, messages, presence, photos, images you send |
 | `media.giphy.com`, `media0`–`media4.giphy.com`, `i.giphy.com` | Loading GIFs shown in chats and GIFs you send. No token or cookies are sent. |
 
+When a user sends feedback from the app, Nodal opens a pre-filled `github.com` issue page in
+their browser; nothing is sent until they submit it there.
+
 Sign-in completes through a one-off listener on `localhost` (`127.0.0.1` / `::1`), on a random
 port, which only accepts Microsoft's redirect. Links people click, including Teams calls and
 meetings, open in the user's browser, not in Nodal.
@@ -106,7 +109,7 @@ meetings, open in the user's browser, not in Nodal.
 | --- | --- |
 | Keychain item `app.nodechat.node` | The refresh token, so users stay signed in. Removed on sign-out. |
 | `~/Library/Application Support/Nodal/config.json` | Settings the user changed on the login screen or in Settings |
-| `~/Library/WebKit/app.nodechat.node` | Interface preferences, custom sidebar sections, drafts, tasks, recent and favourite GIFs |
+| `~/Library/WebKit/app.nodechat.node` | Interface and accessibility preferences, the company logo the user picked, custom sidebar sections, drafts, tasks, recent and favourite GIFs |
 | `~/Library/Logs/Nodal/nodal.log` | A small diagnostic log (about 2 MB at most), with no message text, names or tokens |
 
 Messages and images are kept in memory only. The one exception is tasks: a task made from a message
