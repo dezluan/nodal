@@ -12,8 +12,9 @@ admin and takes about ten minutes.
 - **No client secret.** Nodal is a public client, using the authorisation code flow with PKCE.
 - **Standard Entra ID sign-in** in the user's browser, so MFA, Conditional Access and sign-in
   policies apply as usual.
-- **No Nodal server.** The app talks only to Microsoft. See the [security overview](../SECURITY.md)
-  for data flows, token storage and how message content is handled.
+- **No Nodal server, no telemetry.** The app talks to Microsoft, plus Giphy for GIFs (see
+  [Network access](#network-access)). The [security overview](../SECURITY.md) covers data flows,
+  token storage and how message content is handled.
 
 ## Create the app registration
 
@@ -52,8 +53,9 @@ From the app registration's **Overview** page, send users:
 - the **Application (client) ID**
 - the **Directory (tenant) ID**, or your domain, such as `contoso.com`
 
-Users enter them once on Nodal's login screen, under **Advanced**. They're identifiers, not
-secrets.
+Users enter them once on Nodal's login screen, under **Advanced**, together with whether to read
+channels. They're identifiers for a public client, not secrets, so it's fine to share them by
+email or on your intranet. The user guide is the [README](../README.md#sign-in).
 
 ## Optional: sign in with a code
 
@@ -71,6 +73,44 @@ a user turns it on, so you can approve them later:
 - `Files.ReadWrite.All`: send file attachments to the user's OneDrive or the channel's SharePoint
   folder, as Teams does.
 - `Tasks.ReadWrite`: sync Nodal's task list with Microsoft To Do.
+
+## Deploying Nodal
+
+- **Manual install:** users download the DMG from the
+  [releases page](https://github.com/dezluan/nodal/releases/latest) and follow the
+  [install steps](../README.md#install). Nodal is ad-hoc signed and not notarised yet, so the first
+  launch needs **Open Anyway** in System Settings → Privacy & Security.
+- **Managed install (Intune, Jamf and similar):** deploy `Nodal.app` from the DMG into
+  `/Applications`. Apps installed by an MDM usually aren't quarantined, so users don't see the Gatekeeper
+  step. The bundle id is `app.nodechat.node`.
+- **Updates** are manual for now: there's no auto-updater. Watch the releases page (GitHub's
+  **Watch → Custom → Releases**) to hear about new versions.
+
+## Network access
+
+Nodal makes outgoing HTTPS connections only, to:
+
+| Host | Why |
+| --- | --- |
+| `login.microsoftonline.com` | Sign-in and token refresh |
+| `graph.microsoft.com` | Chats, channels, messages, presence, photos, images you send |
+| `media.giphy.com`, `media0`–`media4.giphy.com`, `i.giphy.com` | Loading GIFs shown in chats and GIFs you send. No token or cookies are sent. |
+
+Sign-in completes through a one-off listener on `localhost` (`127.0.0.1` / `::1`), on a random
+port, which only accepts Microsoft's redirect. Links people click, including Teams calls and
+meetings, open in the user's browser, not in Nodal.
+
+## What Nodal stores on the Mac
+
+| Where | What |
+| --- | --- |
+| Keychain item `app.nodechat.node` | The refresh token, so users stay signed in. Removed on sign-out. |
+| `~/Library/Application Support/Nodal/config.json` | Settings the user changed on the login screen or in Settings |
+| `~/Library/WebKit/app.nodechat.node` | Interface preferences, custom sidebar sections, drafts, tasks, recent and favourite GIFs |
+| `~/Library/Logs/Nodal/nodal.log` | A small diagnostic log (about 2 MB at most), with no message text, names or tokens |
+
+Messages and images are kept in memory only. The one exception is tasks: a task made from a message
+keeps its text.
 
 ## Removing access
 

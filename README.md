@@ -28,8 +28,9 @@ Nodal is an independent app. It isn't made by or affiliated with Microsoft.
 - **Reactions:** click to react, hover to see who reacted.
 - **Tasks:** a simple to-do list in the sidebar. Turn any message into a task, and the task
   links back to it.
-- **Calls:** the 📞 and 🎥 buttons start a Teams call with everyone in the chat. The call itself
-  runs in Teams, because Microsoft doesn't let other apps place calls.
+- **Calls:** the 📞 and 🎥 buttons start a Teams call with everyone in the chat (up to 20
+  people). The call itself runs in Teams on the web or the Teams app, because Microsoft doesn't
+  let other apps place calls.
 - **⌘K** to jump to any chat, person or channel, and **⌘N** for a new message.
 - **Glass or Classic look**, in light and dark, with several colour palettes.
 
@@ -40,11 +41,24 @@ with Microsoft To Do.
 
 1. Download `Nodal_<version>_universal.dmg` from the
    [latest release](https://github.com/dezluan/nodal/releases/latest). It runs on Apple Silicon
-   and Intel Macs.
-2. Open the DMG and drag **Nodal** to **Applications**.
-3. The first time, **right-click Nodal → Open**, then click **Open**. Nodal isn't notarised by
-   Apple yet, so macOS asks once. If macOS still refuses, run
-   `xattr -dr com.apple.quarantine /Applications/Nodal.app` in Terminal.
+   and Intel Macs, and is tested on macOS 26 (Tahoe).
+2. Open the DMG and drag **Nodal** into **Applications**.
+3. Open Nodal. Because it isn't notarised by Apple yet, macOS blocks it the first time:
+   1. In the warning, click **Done** (or **OK**).
+   2. Open **System Settings → Privacy & Security**, scroll down to **Security**, and click
+      **Open Anyway** next to the message about Nodal.
+   3. Confirm with your password or Touch ID. From then on, Nodal opens normally.
+
+   Prefer Terminal? `xattr -dr com.apple.quarantine /Applications/Nodal.app` does the same.
+4. macOS asks whether Nodal may send notifications. Allow it to get new-message alerts.
+
+**Updating:** download the new DMG and drag Nodal into Applications again, replacing the old
+copy. Your sign-in, settings, tasks and drafts are kept. After an update, macOS may ask whether
+Nodal can use its saved sign-in in your Keychain: choose **Always Allow**.
+
+**Uninstalling:** quit Nodal and drag it from Applications to the Bin. To remove everything it
+stored, also delete `~/Library/Application Support/Nodal`, `~/Library/Logs/Nodal` and
+`~/Library/WebKit/app.nodechat.node`, and the `app.nodechat.node` item in Keychain Access.
 
 ## Sign in
 
@@ -52,8 +66,15 @@ Nodal signs in with your work Microsoft account, in your browser, with your usua
 an **app registration** in your organisation's Microsoft Entra ID, which your IT team sets up
 once. Send them the [IT setup guide](docs/it-setup.md).
 
-IT then gives you two values. On Nodal's login screen, open **Advanced** and enter the
-**Application (client) ID** and **Tenant**. If IT didn't approve channel reading, untick **Read Teams channels**. Then click **Sign in with Microsoft**. Nodal remembers these settings.
+IT then gives you two values. The first time you open Nodal, the login screen shows them under
+**Advanced**:
+
+1. Enter the **Tenant** (your organisation's domain, such as `contoso.com`, or its tenant ID)
+   and the **Application (client) ID**.
+2. If IT didn't approve channel reading, untick **Read Teams channels**. Chats and DMs still work.
+3. Click **Sign in with Microsoft**, and pick your work account in the browser.
+
+Nodal remembers you after that. To sign out, open **Settings → Account**.
 
 ## Keyboard shortcuts
 
@@ -70,8 +91,10 @@ IT then gives you two values. On Nodal's login screen, open **Advanced** and ent
 
 ## Privacy
 
-Nodal talks only to Microsoft. There's no Nodal server, and no telemetry or analytics. Your
-sign-in is kept in the macOS Keychain, and messages are never written to disk. The
+There's no Nodal server, and no telemetry or analytics. Nodal connects to Microsoft for
+sign-in and Teams, and to Giphy only to load GIFs, without your token or cookies. Your sign-in
+is kept in the macOS Keychain, and messages are never written to disk (except tasks you make
+from a message, which keep its text). The
 [security overview](SECURITY.md) has the details.
 
 ## Known limitations
@@ -84,7 +107,9 @@ sign-in is kept in the macOS Keychain, and messages are never written to disk. T
 
 ## Feedback
 
-Found a bug or have an idea? [Open an issue](https://github.com/dezluan/nodal/issues).
+Found a bug or have an idea? [Open an issue](https://github.com/dezluan/nodal/issues). It
+helps to include your Nodal version and, for problems, the log file. Both are in **Settings →
+Help & feedback** (**Show log file**). The log holds no message text, names or tokens.
 For security issues, see [SECURITY.md](SECURITY.md).
 
 ## Licence

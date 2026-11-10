@@ -11,12 +11,14 @@ endpoints and has no backend server of its own.
 | Nodal → `login.microsoftonline.com` | Sign-in, token refresh | OAuth 2.0 auth code + PKCE (S256) |
 | Nodal → `graph.microsoft.com/v1.0` | Chats, channels, messages, presence, photos, inline images you send | HTTPS (rustls), bearer token |
 | Nodal → `*.sharepoint.com` | Files you attach, only if file uploads are on | Graph upload-session URL (pre-authorised, no token sent) |
+| Nodal → `media.giphy.com`, `i.giphy.com` | GIFs shown in chats and GIFs you send | HTTPS, no token or cookies; redirects only to Giphy |
 | Nodal → your email app | Feedback you choose to send | A `mailto:` link; you press Send yourself |
 | Nodal → system browser | Sign-in page; links you click | macOS `open` |
 | Nodal → macOS Notification Center | New-message banners (sender, chat name, short preview) | UserNotifications framework, with user permission |
 | Microsoft → Nodal (localhost) | OAuth redirect | One-shot listener on `127.0.0.1`/`::1`, random port |
 
-No telemetry, analytics or third-party services. Nothing is sent anywhere else.
+No telemetry or analytics. Apart from Giphy for GIFs, there are no third-party services, and
+nothing is sent anywhere else.
 
 ## Identity and permissions
 
