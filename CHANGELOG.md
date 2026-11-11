@@ -1,11 +1,11 @@
 # Release notes
 
-What's new in each version of Nodal. Downloads are on the
-[releases page](https://github.com/dezluan/nodal/releases).
+What's new in each version of Wren. Wren was called Nodal until 0.5.0, so the notes below for 0.4.0 and earlier describe Nodal. Downloads are on the
+[releases page](https://github.com/dezluan/wren/releases).
 
 ## 0.4.0 · 10 November 2026
 
-Nodal 0.4.0 makes Nodal easier to read and use, and lets you make it your own.
+Wren 0.4.0 makes Wren easier to read and use, and lets you make it your own.
 
 ### New
 - **Accessibility settings** (Settings → Accessibility):
@@ -19,13 +19,13 @@ Nodal 0.4.0 makes Nodal easier to read and use, and lets you make it your own.
 - **Company logo:** pick an image in Settings → General to show it next to the name at the top of
   the sidebar. It stays on your Mac.
 - **Feedback straight to GitHub:** 💬 next to Settings opens a pre-filled issue on this
-  repository, with your Nodal and macOS versions. You need a GitHub account, and issues are public.
+  repository, with your Wren and macOS versions. You need a GitHub account, and issues are public.
 - **A new login screen:** a gently moving network of dots behind the sign-in card. It stays still
   when Reduce motion is on.
 
 ### Fixed
-- The version line in feedback said "Node" instead of "Nodal".
-- Nodal now logs why a saved sign-in was removed, to help track down cases where people had to
+- The version line in feedback said "Node" instead of "Wren".
+- Wren now logs why a saved sign-in was removed, to help track down cases where people had to
   sign in again.
 
 ## 0.3.1 · 10 November 2026

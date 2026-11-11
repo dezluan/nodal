@@ -1,6 +1,6 @@
-# Nodal: security overview
+# Wren: security overview
 
-This document is for IT and security reviewers. Nodal is a desktop client for Microsoft Teams:
+This document is for IT and security reviewers. Wren is a desktop client for Microsoft Teams:
 a Rust backend (Tauri v2) with a bundled HTML/JS user interface. It talks only to Microsoft
 endpoints and has no backend server of its own.
 
@@ -8,40 +8,40 @@ endpoints and has no backend server of its own.
 
 | From → To | What | How |
 | --- | --- | --- |
-| Nodal → `login.microsoftonline.com` | Sign-in, token refresh | OAuth 2.0 auth code + PKCE (S256) |
-| Nodal → `graph.microsoft.com/v1.0` | Chats, channels, messages, presence, photos, inline images you send | HTTPS (rustls), bearer token |
-| Nodal → `*.sharepoint.com` | Files you attach, only if file uploads are on | Graph upload-session URL (pre-authorised, no token sent) |
-| Nodal → `media.giphy.com`, `i.giphy.com` | GIFs shown in chats and GIFs you send | HTTPS, no token or cookies; redirects only to Giphy |
-| Nodal → your browser → `github.com` | Feedback you choose to send | A pre-filled public issue page; you press Create yourself |
-| Nodal → system browser | Sign-in page; links you click | macOS `open` |
-| Nodal → macOS Notification Center | New-message banners (sender, chat name, short preview) | UserNotifications framework, with user permission |
-| Microsoft → Nodal (localhost) | OAuth redirect | One-shot listener on `127.0.0.1`/`::1`, random port |
+| Wren → `login.microsoftonline.com` | Sign-in, token refresh | OAuth 2.0 auth code + PKCE (S256) |
+| Wren → `graph.microsoft.com/v1.0` | Chats, channels, messages, presence, photos, inline images you send | HTTPS (rustls), bearer token |
+| Wren → `*.sharepoint.com` | Files you attach, only if file uploads are on | Graph upload-session URL (pre-authorised, no token sent) |
+| Wren → `media.giphy.com`, `i.giphy.com` | GIFs shown in chats and GIFs you send | HTTPS, no token or cookies; redirects only to Giphy |
+| Wren → your browser → `github.com` | Feedback you choose to send | A pre-filled public issue page; you press Create yourself |
+| Wren → system browser | Sign-in page; links you click | macOS `open` |
+| Wren → macOS Notification Center | New-message banners (sender, chat name, short preview) | UserNotifications framework, with user permission |
+| Microsoft → Wren (localhost) | OAuth redirect | One-shot listener on `127.0.0.1`/`::1`, random port |
 
 No telemetry or analytics. Apart from Giphy for GIFs, there are no third-party services, and
 nothing is sent anywhere else.
 
 ## Identity and permissions
 
-- **Delegated permissions only.** Nodal acts as the signed-in user, and Microsoft Graph enforces
+- **Delegated permissions only.** Wren acts as the signed-in user, and Microsoft Graph enforces
   that user's normal access on every request. There are no application permissions and no
-  client secret (Nodal is a public client).
+  client secret (Wren is a public client).
 - Requested scopes: `User.Read`, `User.ReadBasic.All`, `Chat.ReadWrite`, `ChatMessage.Send`,
-  `Team.ReadBasic.All`, `Channel.ReadBasic.All`, `ChannelMessage.Read.All` (optional), `ChannelMessage.Send`, `Presence.Read.All`, `offline_access`. Nodal doesn't request
+  `Team.ReadBasic.All`, `Channel.ReadBasic.All`, `ChannelMessage.Read.All` (optional), `ChannelMessage.Send`, `Presence.Read.All`, `offline_access`. Wren doesn't request
   mail or directory-write access, and asks for calendar access only when you turn it on (below).
-- **Files (opt-in):** `Files.ReadWrite.All` is requested only when a user turns on *Settings → Files*. Until then Nodal has no file access. Nodal uses
+- **Files (opt-in):** `Files.ReadWrite.All` is requested only when a user turns on *Settings → Files*. Until then Wren has no file access. Wren uses
   it only to upload files the user attaches. Chat files go to the user's OneDrive folder
   "Microsoft Teams Chat Files" and are shared (edit, sign-in required, no email) with that chat's
   members, as Teams does. Channel files go to the channel's SharePoint folder, which channel
-  members can already reach. Nodal never lists, reads or deletes other files. If the tenant
+  members can already reach. Wren never lists, reads or deletes other files. If the tenant
   requires admin consent, Microsoft shows *Need admin approval* and nothing changes until an admin
   approves.
 - **Calendar (opt-in):** `Calendars.ReadWrite` is requested only when a user clicks *Connect
-  calendar* (Calendar view or *Settings → Calendar*). Nodal uses it to show the user's own events
+  calendar* (Calendar view or *Settings → Calendar*). Wren uses it to show the user's own events
   for the week on screen, to accept, tentatively accept or decline invitations (the organiser is
   told, as in Outlook), and to create meetings the user fills in. It never deletes or edits
   existing events and doesn't read other people's calendars. Invitation bodies are shown as
   Outlook's plain-text preview only, never as HTML. Join links are opened only if they point at
-  `https://teams.microsoft.com/`. Turning the calendar off in Settings stops Nodal using it; the
+  `https://teams.microsoft.com/`. Turning the calendar off in Settings stops Wren using it; the
   grant itself can be removed in Entra ID or at myapps.microsoft.com.
 - Your **Conditional Access, MFA and sign-in policies** apply as normal. Admins can restrict the
   app to assigned users and revoke it at any time in Entra ID.
@@ -50,12 +50,12 @@ nothing is sent anywhere else.
 
 - The **refresh token** is stored in the macOS **Keychain** and deleted on sign-out or when
   Microsoft rejects it. **Access tokens** live in memory only.
-- Tokens are never written to logs. Nodal keeps a small diagnostic log at
-  `~/Library/Logs/Nodal/nodal.log`, capped at about 2 MB. It contains only errors, counts,
+- Tokens are never written to logs. Wren keeps a small diagnostic log at
+  `~/Library/Logs/Wren/wren.log`, capped at about 2 MB. It contains only errors, counts,
   conversation types and Graph resource ids, never message text, names or tokens.
-- **Nodal never writes messages or images to disk**, apart from tasks you choose to keep (below).
+- **Wren never writes messages or images to disk**, apart from tasks you choose to keep (below).
   They are held in memory, and image
-  responses are sent to the webview with `Cache-Control: no-store`. Nodal's image cache is
+  responses are sent to the webview with `Cache-Control: no-store`. Wren's image cache is
   bounded: 8 MB per image, and it is cleared once it passes 64 MB, so it peaks at about 72 MB.
   macOS's own WebKit may still keep transient data, such as rendered pages, the way any
   browser does.
@@ -69,7 +69,7 @@ nothing is sent anywhere else.
     stays in memory. It's cleared on sign-out.
   - **Tasks**: the tasks you add, including message text when you use *Add to tasks*. That's the
     point of a task list; they stay until you delete them.
-- `~/Library/Application Support/Nodal/config.json` holds any tenant or client ID the user
+- `~/Library/Application Support/Wren/config.json` holds any tenant or client ID the user
   overrides. These are public identifiers, not secrets.
 
 ## Sign-in
@@ -99,14 +99,14 @@ Message HTML is treated as hostile:
   only for `<at>` elements in the sanitiser's output that match the message's Graph `mentions`
   data. In that output a literal `<at` can only be a real element, so entity tricks and
   attribute hiding don't work.
-- **No remote images.** Only images proxied through Nodal can load, which blocks tracking pixels
+- **No remote images.** Only images proxied through Wren can load, which blocks tracking pixels
   and read receipts. External images are shown as a link instead. This is enforced in the
   sanitiser and again in the CSP. The one exception is GIFs from Teams' GIF picker: a URL
-  that matches Giphy's media hosts and path shape exactly is reduced to its Giphy id, and Nodal
+  that matches Giphy's media hosts and path shape exactly is reduced to its Giphy id, and Wren
   fetches `https://media.giphy.com/media/{id}/giphy.gif` itself, with no token or cookies,
   redirects limited to Giphy, an 8 MB cap, and the bytes sniffed as GIF or WebP. Giphy sees
   your IP address and that a GIF was loaded, just as it does in Teams.
-  Sending a GIF works the same way: a pasted giphy.com link is reduced to its id, Nodal
+  Sending a GIF works the same way: a pasted giphy.com link is reduced to its id, Wren
   downloads the GIF (a smaller version if the original is over 4 MB) and sends it as an inline
   image. Recent and favourite GIFs are only ids, kept in local storage on this Mac.
 - The **image proxy** (`graphimg://`) only fetches two strict path shapes: user photos and
@@ -158,7 +158,7 @@ What a user types is converted from Markdown to HTML in Rust:
 The UI talks to the backend through a fixed set of commands. Every ID used in a Graph URL is
 checked against a strict character allowlist, so paths and queries can't be injected. Paging
 links are accepted only if they continue a Graph message listing. Paging-link validation
-hasn't yet been tested against a live tenant; if Graph returns an unexpected link form, Nodal
+hasn't yet been tested against a live tenant; if Graph returns an unexpected link form, Wren
 just stops loading older history rather than following it. All Graph traffic is pinned to
 `https://graph.microsoft.com/v1.0/`.
 
@@ -191,7 +191,7 @@ The automated test suite covers the security-relevant logic:
 - **Ad-hoc signed:** the app bundle is ad-hoc signed (identifier `app.nodechat.node`), but not
   signed with a Developer ID or notarised. For managed rollout, sign it with
   the organisation's Apple Developer ID or distribute it via Intune/Jamf.
-- **Polling:** Nodal polls Graph every few seconds, staying within Graph's throttling limits.
+- **Polling:** Wren polls Graph every few seconds, staying within Graph's throttling limits.
   It doesn't use change notifications, which would need a public webhook.
 
 ## Reporting

@@ -1,27 +1,27 @@
-# Setting up Nodal for your organisation
+# Setting up Wren for your organisation
 
-Nodal is a Mac app for Microsoft Teams chats, built on Microsoft Graph. To sign in, it needs an
+Wren is a Mac app for Microsoft Teams chats, built on Microsoft Graph. To sign in, it needs an
 app registration in your organisation's Microsoft Entra ID. This is a one-off task for an Entra
 admin and takes about ten minutes.
 
-## How Nodal signs in
+## How Wren signs in
 
-- **Delegated permissions only.** Nodal acts as the signed-in user, and Microsoft enforces that
-  user's normal access: Nodal can only see what they can see in Teams. There are no application
+- **Delegated permissions only.** Wren acts as the signed-in user, and Microsoft enforces that
+  user's normal access: Wren can only see what they can see in Teams. There are no application
   permissions.
-- **No client secret.** Nodal is a public client, using the authorisation code flow with PKCE.
+- **No client secret.** Wren is a public client, using the authorisation code flow with PKCE.
 - **Standard Entra ID sign-in** in the user's browser, so MFA, Conditional Access and sign-in
   policies apply as usual.
-- **No Nodal server, no telemetry.** The app talks to Microsoft, plus Giphy for GIFs (see
+- **No Wren server, no telemetry.** The app talks to Microsoft, plus Giphy for GIFs (see
   [Network access](#network-access)). The [security overview](../SECURITY.md) covers data flows,
   token storage and how message content is handled.
 
 ## Create the app registration
 
-1. In the Entra admin center, go to **App registrations → New registration**. Name it `Nodal`
+1. In the Entra admin center, go to **App registrations → New registration**. Name it `Wren`
    and choose *Accounts in this organizational directory only*.
 2. Under **Authentication → Add a platform → Mobile and desktop applications**, add the custom
-   redirect URI **`http://localhost`**. Entra accepts any port on localhost, and Nodal picks a
+   redirect URI **`http://localhost`**. Entra accepts any port on localhost, and Wren picks a
    free one each time.
 3. Under **API permissions → Add a permission → Microsoft Graph → Delegated permissions**, add:
 
@@ -40,8 +40,8 @@ admin and takes about ten minutes.
 
 4. Click **Grant admin consent** for your organisation. `ChannelMessage.Read.All` always needs
    admin consent, and granting everything up front means users never see a permissions prompt.
-5. *Optional:* in **Enterprise applications → Nodal → Properties**, set **Assignment required**
-   to **Yes**, then assign the users or groups allowed to use Nodal.
+5. *Optional:* in **Enterprise applications → Wren → Properties**, set **Assignment required**
+   to **Yes**, then assign the users or groups allowed to use Wren.
 
 **Channels are optional.** If you'd rather not grant `ChannelMessage.Read.All`, leave it out.
 Users then untick **Read Teams channels** on the login screen, and chats and DMs work as normal.
@@ -53,7 +53,7 @@ From the app registration's **Overview** page, send users:
 - the **Application (client) ID**
 - the **Directory (tenant) ID**, or your domain, such as `contoso.com`
 
-Users enter them once on Nodal's login screen, under **Advanced**, together with whether to read
+Users enter them once on Wren's login screen, under **Advanced**, together with whether to read
 channels. They're identifiers for a public client, not secrets, so it's fine to share them by
 email or on your intranet. The user guide is the [README](../README.md#sign-in).
 
@@ -72,15 +72,15 @@ a user turns it on, so you can approve them later:
 - `Calendars.ReadWrite`: show the user's Outlook calendar, answer invitations, create meetings.
 - `Files.ReadWrite.All`: send file attachments to the user's OneDrive or the channel's SharePoint
   folder, as Teams does.
-- `Tasks.ReadWrite`: sync Nodal's task list with Microsoft To Do.
+- `Tasks.ReadWrite`: sync Wren's task list with Microsoft To Do.
 
-## Deploying Nodal
+## Deploying Wren
 
 - **Manual install:** users download the DMG from the
-  [releases page](https://github.com/dezluan/nodal/releases/latest) and follow the
-  [install steps](../README.md#install). Nodal is ad-hoc signed and not notarised yet, so the first
+  [releases page](https://github.com/dezluan/wren/releases/latest) and follow the
+  [install steps](../README.md#install). Wren is ad-hoc signed and not notarised yet, so the first
   launch needs **Open Anyway** in System Settings → Privacy & Security.
-- **Managed install (Intune, Jamf and similar):** deploy `Nodal.app` from the DMG into
+- **Managed install (Intune, Jamf and similar):** deploy `Wren.app` from the DMG into
   `/Applications`. Apps installed by an MDM usually aren't quarantined, so users don't see the Gatekeeper
   step. The bundle id is `app.nodechat.node`.
 - **Updates** are manual for now: there's no auto-updater. Watch the releases page (GitHub's
@@ -88,7 +88,7 @@ a user turns it on, so you can approve them later:
 
 ## Network access
 
-Nodal makes outgoing HTTPS connections only, to:
+Wren makes outgoing HTTPS connections only, to:
 
 | Host | Why |
 | --- | --- |
@@ -96,27 +96,27 @@ Nodal makes outgoing HTTPS connections only, to:
 | `graph.microsoft.com` | Chats, channels, messages, presence, photos, images you send |
 | `media.giphy.com`, `media0`–`media4.giphy.com`, `i.giphy.com` | Loading GIFs shown in chats and GIFs you send. No token or cookies are sent. |
 
-When a user sends feedback from the app, Nodal opens a pre-filled `github.com` issue page in
+When a user sends feedback from the app, Wren opens a pre-filled `github.com` issue page in
 their browser; nothing is sent until they submit it there.
 
 Sign-in completes through a one-off listener on `localhost` (`127.0.0.1` / `::1`), on a random
 port, which only accepts Microsoft's redirect. Links people click, including Teams calls and
-meetings, open in the user's browser, not in Nodal.
+meetings, open in the user's browser, not in Wren.
 
-## What Nodal stores on the Mac
+## What Wren stores on the Mac
 
 | Where | What |
 | --- | --- |
 | Keychain item `app.nodechat.node` | The refresh token, so users stay signed in. Removed on sign-out. |
-| `~/Library/Application Support/Nodal/config.json` | Settings the user changed on the login screen or in Settings |
+| `~/Library/Application Support/Wren/config.json` | Settings the user changed on the login screen or in Settings |
 | `~/Library/WebKit/app.nodechat.node` | Interface and accessibility preferences, the company logo the user picked, custom sidebar sections, drafts, tasks, recent and favourite GIFs |
-| `~/Library/Logs/Nodal/nodal.log` | A small diagnostic log (about 2 MB at most), with no message text, names or tokens |
+| `~/Library/Logs/Wren/wren.log` | A small diagnostic log (about 2 MB at most), with no message text, names or tokens |
 
 Messages and images are kept in memory only. The one exception is tasks: a task made from a message
 keeps its text.
 
 ## Removing access
 
-Delete the app registration, or remove individual users in **Enterprise applications → Nodal →
+Delete the app registration, or remove individual users in **Enterprise applications → Wren →
 Users and groups**. Users can also remove the grant themselves at
 [myapps.microsoft.com](https://myapps.microsoft.com).
