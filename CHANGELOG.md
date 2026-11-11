@@ -3,6 +3,25 @@
 What's new in each version of Wren. Wren was called Nodal until 0.5.0, so the notes below for 0.4.0 and earlier describe Nodal. Downloads are on the
 [releases page](https://github.com/dezluan/wren/releases).
 
+## 0.5.0 · 11 November 2026
+
+Nodal is now **Wren**, with a new look, group chats and a colour for every bird.
+
+### New
+- **A new name and icon:** Wren, with a wren mascot. Your sign-in, settings, tasks and drafts carry over.
+- **Group chats:** add several people as you type, name the group, and add people later with a choice of how much history they see.
+- **One calm design**, replacing the looks: warm paper, serif titles, small corners and no gradients, in light and dark.
+- **Five colours**, named after birds: Hedgerow (green), Kingfisher (teal), Nightjar (blue), Robin (rust) and Rook (graphite). The sidebar takes the colour, over a faint contour-line pattern.
+- **Login checks:** the tenant and client ID are marked required and checked as you type, with a clear message for common mistakes.
+- **A refreshed login screen** with the wren.
+
+### Changed
+- Type is set in two faces on one scale, for clearer hierarchy.
+- Reduce transparency is gone, as nothing is see-through any more.
+
+### Fixed
+- A second focus outline no longer draws inside the message box while you type.
+
 ## 0.4.0 · 10 November 2026
 
 Wren 0.4.0 makes Wren easier to read and use, and lets you make it your own.

@@ -23,6 +23,8 @@ Wren is an independent app. It isn't made by or affiliated with Microsoft. Its m
 - **Unreads** (⌘⇧A): every chat with new messages on one page, showing just what's new.
   Unread state stays in step with Teams, with a Dock badge and desktop notifications.
 - **Threads** in a side panel, like Slack.
+- **Group chats:** add several people as you type, name the group, and add people later with
+  a choice of how much history they see.
 - **A composer with Slack muscle memory:** `*bold*`, `_italic_`, `~strike~`, `` `code` ``,
   `:shortcodes:`, @mentions, Enter to send, and drafts kept per conversation.
 - **Images and GIFs:** paste a screenshot to send it. Paste a Giphy link to send the GIF, or pick
@@ -34,10 +36,11 @@ Wren is an independent app. It isn't made by or affiliated with Microsoft. Its m
   people). The call itself runs in Teams on the web or the Teams app, because Microsoft doesn't
   let other apps place calls.
 - **⌘K** to jump to any chat, person or channel, and **⌘N** for a new message.
-- **Glass or Classic look**, in light and dark, with several colour palettes.
+- **One calm design**, in light and dark: warm paper, serif titles and a single colour.
+  Choose it in Settings → General: Hedgerow, Kingfisher, Nightjar, Robin or Rook.
 - **Your company logo** next to the name at the top of the sidebar (Settings → General).
-- **Accessibility** (Settings → Accessibility): text size (⌘+ / ⌘− / ⌘0), reduce motion, reduce
-  transparency, increase contrast, underlined links and bolder keyboard focus. Each follows your
+- **Accessibility** (Settings → Accessibility): text size (⌘+ / ⌘− / ⌘0), reduce motion,
+  increase contrast, underlined links and bolder keyboard focus. Each follows your
   Mac's own accessibility settings unless you change it. Buttons, dialogs and the main areas are
   labelled for VoiceOver.
 
