@@ -14,7 +14,7 @@ Wren talks to Teams through Microsoft Graph, so everything you send shows up in 
 colleagues. You just never have to open Teams yourself. It's a native Mac app written in Rust:
 it starts quickly, stays light on memory, and works the way Slack does.
 
-Wren is an independent app. It isn't made by or affiliated with Microsoft. Its mascot is a wren: small, quick, and much quieter than the alternatives.
+Wren is an independent app. It isn't made by, affiliated with or endorsed by Microsoft or Slack. Its mascot is a wren: small, quick, and much quieter than the alternatives.
 
 ## What you get
 
@@ -130,4 +130,4 @@ The log holds no message text, names or tokens. For security issues, see [SECURI
 
 Wren is free to download and use. © 2026 Dez-Luan Pieterse. See [LICENSE](LICENSE).
 
-Microsoft, Microsoft Teams and Microsoft Entra are trademarks of the Microsoft group of companies.
+Microsoft, Microsoft Teams and Microsoft Entra are trademarks of the Microsoft group of companies. Slack is a trademark of Slack Technologies, LLC.
